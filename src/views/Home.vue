@@ -88,7 +88,7 @@
             </button>
         </aside>
         <main role="main">
-            <vote-card/>
+            <card-handler/>
         </main>
         <aside class="banner banner-bottom" role="doc-tip" aria-label="Submit a name">
             <img
@@ -143,12 +143,12 @@
 
 <script>
 // @ is an alias to /src
-import VoteCard from '@/components/VoteCard.vue'
+import CardHandler from '@/components/CardHandler.vue'
 
 export default {
   name: 'Home',
   components: {
-    VoteCard
+    CardHandler
   }
 }
 </script>

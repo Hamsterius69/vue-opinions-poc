@@ -1,11 +1,14 @@
 <template>
-<v-container>
+<v-container fluid>
   <v-card outlined>
     <v-row class="vote-card">
       <v-col cols="3" class="vote-card__image-col">
-        <v-img class="vote-card__image" height="170" :src="require('../assets/img/cristina-desktop-list.png')" gradient="to right, rgba(0,0,0,0), #8c8a8a">
-          <div class="vote-card__thumbs-container">
+        <v-img class="vote-card__image" height="170" :src="require(`../assets/img/${person.picture}-desktop-list.png`)" gradient="to right, rgba(0,0,0,0), #8c8a8a">
+          <div v-if="person.isPositive" class="vote-card__thumbs-container vote-card__percentage-like--color">
             <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-up.svg')"/>
+          </div>
+          <div v-else class="vote-card__thumbs-container vote-card__percentage-dislike--color">
+            <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-down.svg')"/>
           </div>
         </v-img>
       </v-col>
@@ -13,14 +16,14 @@
         <v-row>
           <v-col cols="8">
             <v-row>
-              <p class="vote-card__text-col--title">Cristina Fernandez de kirchner</p>
+              <p class="vote-card__text-col--title"> {{ person.name }} </p>
             </v-row>
             <v-row>
-              <p class="vote-card__text-col--detail">Vestibulum diam ante, porttitor a odio eget, neque. Aenean eu velit ...</p>
+              <p class="vote-card__text-col--detail"> {{ person.description }} </p>
             </v-row>
           </v-col>
           <v-col cols="4">
-            <vote elapsedTime="One year in politics"/>
+            <vote :elapsedTime="person.elapsedTime"/>
           </v-col>
         </v-row>
       </v-col>
@@ -33,14 +36,14 @@
           <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-up.svg')"/>
         </div>
         <div class="vote-card__thumbs-text--position">
-          <p>56.3%</p>
+          <p> {{ person.positivePercentag }} </p>
         </div>
       </v-row>
     </v-col>
     <v-col>
       <v-row>
         <div class="vote-card__thumbs-text--position  vote-card__thumbs-text--position-right">
-          <p>56.3%</p>
+          <p> {{ person.negativePercentag }} </p>
         </div>
         <div class="vote-card__thumbs--position">
           <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-down.svg')"/>
@@ -49,8 +52,8 @@
     </v-col>
   </v-row>
   <v-row class="vote-card__percentage--color">
-    <v-col class="vote-card__percentage-like--color"></v-col>
-    <v-col class="vote-card__percentage-dislike--color"></v-col>
+    <div class="vote-card__percentage-like--color" :style="`width:${person.positivePercentag}`"></div>
+    <div class="vote-card__percentage-dislike--color" :style="`width:${person.negativePercentag}`"></div>
   </v-row>
   </v-container>
 </template>
@@ -65,10 +68,10 @@ export default {
     Vote
   },
   props: {
-    image: {
-      type: String,
-      require: false,
-    },
+    person: {
+      type: Object,
+      require: true,
+    }
   }
 }
 </script>
@@ -106,12 +109,14 @@ export default {
   letter-spacing: 0px;
   text-align: left;
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vote-card__thumbs-container {
   width: 45px;
   height: 45px;
-  background: rgba(59, 185, 179, 0.8);
   border: none;
   padding-top: 10%;
   margin-left: -100%;
@@ -129,6 +134,10 @@ export default {
 
 .vote-card__percentage-like--color {
   background: rgba(59, 185, 179, 0.8);
+}
+
+.test {
+  width: 18% !important;
 }
 
 .vote-card__percentage-dislike--color {
