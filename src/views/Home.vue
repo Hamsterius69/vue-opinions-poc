@@ -88,9 +88,7 @@
             </button>
         </aside>
         <main role="main">
-            <!-- Start: Implementation -->
-            👉  My beautiful component will be here 👈
-            <!-- End: Implementation -->
+            <vote-card/>
         </main>
         <aside class="banner banner-bottom" role="doc-tip" aria-label="Submit a name">
             <img
@@ -145,12 +143,12 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue' // my beautiful component will be here
+import VoteCard from '@/components/VoteCard.vue'
 
 export default {
   name: 'Home',
   components: {
-    // my beautiful component will be here
+    VoteCard
   }
 }
 </script>
