@@ -1,7 +1,7 @@
 <template>
   <v-container fluit>
     <v-row class="vote__elapsed-time">
-      <div class="vote__elapsed-time-text"> {{headerText}} </div>
+      <div class="vote__elapsed-time-text"> {{ headerText }} </div>
     </v-row>
     <v-row>
       <v-col cols="2" lass="vote__thumbs-col">
@@ -15,7 +15,7 @@
         </button>
       </v-col>
       <v-col>
-        <v-btn dark large class="vote__btn" @click="vote" :loading="isLoading">
+        <v-btn dark large class="vote__btn" @click="btnPressed()" :loading="isLoading">
           {{voteBtnText}}
         </v-btn>
       </v-col>
@@ -27,8 +27,8 @@
 export default {
   name: 'vote',
   props: {
-    elapsedTime: {
-      type: String,
+    person: {
+      type: Object,
       require: true
     },
   },
@@ -40,7 +40,7 @@ export default {
       dislikeActive: false,
       voteBtnText: 'Vote now',
       headerText: '',
-      voteAgain: false,
+      isAlreadyVote: false,
     }
   },
   beforeMount() {
@@ -48,7 +48,8 @@ export default {
   },
   methods: {
     initialData() {
-      this.headerText = this.elapsedTime
+      this.updatedPerson = this.person;
+      this.headerText = this.person.elapsedTime;
     },
     likeSelected() {
       this.likeActive = true;
@@ -58,17 +59,41 @@ export default {
       this.likeActive = false;
       this.dislikeActive = true;
     },
-    vote() {
+    btnPressed() {
+      if (this.isAlreadyVote) {
+        this.resetVoteBtn();
+      } else {
+        this.vote();
+      }
+    },
+    resetVoteBtn() {
+      this.voteBtnText = 'Vote now';
+      this.headerText = this.person.elapsedTime
       this.likeActive = false;
       this.dislikeActive = false;
-      if (this.voteAgain) {
+      this.isAlreadyVote = false;
+    },
+    async vote() {
+      if (!this.likeActive && !this.dislikeActive) {
+        this.notifySnackBar('You have to select like or dislike','alert');
+      } else {
+        this.isLoading = true;
+        await this.delay(1000); // this is to simulate the time of a http request
+        if (this.likeActive) {
+          this.updatedPerson.votes.positive += 1;
+        } else if (this.dislikeActive) {
+          this.updatedPerson.votes.negative += 1; 
+        }
+        this.updatedPerson.isPositive = this.updatedPerson.votes.positive > this.updatedPerson.votes.negative ? true : false,
+        this.updatedPerson.positivePercentag = this.getPorcentag(this.updatedPerson.votes.positive + this.updatedPerson.votes.negative, this.updatedPerson.votes.positive),
+        this.updatedPerson.negativePercentag = this.getPorcentag(this.updatedPerson.votes.positive + this.updatedPerson.votes.negative, this.updatedPerson.votes.negative)
+        this.$store.dispatch('setPerson', this.updatedPerson);
         this.voteBtnText = 'Vote Again';
         this.headerText = 'thanks you for your vote!'
-        this.voteAgain = false;
-      } else {
-        this.voteBtnText = 'Vote now';
-        this.headerText = this.elapsedTime
-        this.voteAgain = true;
+        this.likeActive = false;
+        this.dislikeActive = false;
+        this.isAlreadyVote = true;
+        this.isLoading = false;
       }
     },
   }

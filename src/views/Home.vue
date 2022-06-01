@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <snack-bar></snack-bar>
     <nav class="nav" role="navigation">
         <div class="max-centered">
             <h1 class="nav__logo">Rule of thumb.</h1>
@@ -144,11 +145,13 @@
 <script>
 // @ is an alias to /src
 import CardHandler from '@/components/CardHandler.vue'
+import SnackBar from '@/components/general/SnackBar';
 
 export default {
   name: 'Home',
   components: {
-    CardHandler
+    CardHandler,
+    SnackBar
   }
 }
 </script>
