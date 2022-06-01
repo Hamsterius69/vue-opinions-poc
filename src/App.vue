@@ -6,4 +6,4 @@
 
 <style>
 @import './assets/main.css';
-</style>
+</style>./components/VoteCard.vue
