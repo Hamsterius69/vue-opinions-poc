@@ -17,10 +17,11 @@ export default {
   },
   data() {
     return {
+      peopleLocalStorage: null,
     }
   },
   beforeMount() {
-    this.loadInitialData();
+    this.initialData();
   },
   computed: {
     ...mapState({
@@ -28,7 +29,15 @@ export default {
     }),
   },
   methods: {
-    loadInitialData() {
+    initialData() {
+      this.peopleLocalStorage = JSON.parse(localStorage.getItem('people'));
+      if (this.peopleLocalStorage) {
+        this.$store.dispatch('setPeople', this.peopleLocalStorage);
+      } else {
+        this.loadInitialDataFromJson();
+      }
+    },
+    loadInitialDataFromJson() {
       const size = initialData.data.length;
       for (let i = 0; i < size; i += 1) {
         const person = {
@@ -49,6 +58,7 @@ export default {
         }
         this.$store.dispatch('addPerson', person);
       }
+      localStorage.setItem('people', JSON.stringify(this.people));
     },
   }
 }

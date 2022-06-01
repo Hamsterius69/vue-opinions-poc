@@ -23,7 +23,7 @@
             </v-row>
           </v-col>
           <v-col cols="4">
-            <vote :elapsedTime="person.elapsedTime"/>
+            <vote :person="person"/>
           </v-col>
         </v-row>
       </v-col>

@@ -15,6 +15,14 @@ export default {
           setTimeout(resolve, ms);
         });
       },
+      notifySnackBar(message, color, time = 4000, active = true) {
+        this.$store.dispatch('globalSetNotifySnackBar', {
+          color,
+          active,
+          message,
+          duration: time,
+        });
+      },
     },
   };
   
