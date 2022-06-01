@@ -1,5 +1,5 @@
 <template>
-  <v-contentiner fluit>
+  <v-container fluit>
     <v-row class="vote__elapsed-time">
       <div class="vote__elapsed-time-text"> {{headerText}} </div>
     </v-row>
@@ -15,13 +15,12 @@
         </button>
       </v-col>
       <v-col>
-        <v-btn dark large class="vote__btn" @click="vote" :loading="isLoading"
-               :disabled="!likeActive && !dislikeActive">
+        <v-btn dark large class="vote__btn" @click="vote" :loading="isLoading">
           {{voteBtnText}}
         </v-btn>
       </v-col>
     </v-row>
-  </v-contentiner>
+  </v-container>
 </template>
 
 <script>
@@ -30,8 +29,7 @@ export default {
   props: {
     elapsedTime: {
       type: String,
-      require: false,
-      default: ''
+      require: true
     },
   },
   data() {
