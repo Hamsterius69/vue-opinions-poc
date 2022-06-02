@@ -15,7 +15,10 @@
         </button>
       </v-col>
       <v-col>
-        <v-btn dark large class="vote__btn" @click="btnPressed()" :loading="isLoading">
+        <v-btn dark
+               :large="$vuetify.breakpoint.width > 1280"
+               :small="$vuetify.breakpoint.width < 1281"
+               class="vote__btn" @click="btnPressed()" :loading="isLoading">
           {{voteBtnText}}
         </v-btn>
       </v-col>
@@ -102,9 +105,8 @@ export default {
 
 <style scoped>
 .vote__thumbs {
-  height: 45px;
-  width: 45px;
-  padding: 50%;
+  height: 100%;
+  width: 250%;
 }
 
 .vote__elapsed-time {
@@ -135,16 +137,20 @@ export default {
 }
 
 .vote__thumbs--image {
-  height: 20px;
-  width: 20px;
+  height: 50%;
+  width: 50%;
+  position:relative;
+  top: 30%;
+  left:50%;
+  transform: translate(-50%, -50%);
 }
 
 .vote__thumbs-col {
-  margin-left: 5px;
+  margin-left: 2%;
 }
 
 .vote__btn {
-  margin-left: 5px;
+  margin-left: 3%;
   font-family: Lato;
   font-size: 18px;
   font-weight: 400;
@@ -153,5 +159,7 @@ export default {
   text-align: center;
   border-radius: 0;
   border: 1px solid #ffffff;
+  max-width: 110px;
+  opacity: 0.7;
 }
 </style>

@@ -89,7 +89,7 @@
             </button>
         </aside>
         <main role="main">
-            <card-handler/>
+          <card-handler/>
         </main>
         <aside class="banner banner-bottom" role="doc-tip" aria-label="Submit a name">
             <img
