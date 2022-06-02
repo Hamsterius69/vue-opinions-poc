@@ -1,33 +1,33 @@
 <template>
-<v-container fluid>
-  <v-card outlined>
-    <v-row class="vote-card">
-      <v-col cols="3" class="vote-card__image-col">
-        <v-img class="vote-card__image" height="170" :src="require(`../assets/img/${person.picture}.png`)" gradient="to right, rgba(0,0,0,0), #8c8a8a">
-          <div v-if="person.isPositive" class="vote-card__thumbs-container vote-card__percentage-like--color">
-            <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-up.svg')"/>
-          </div>
-          <div v-else class="vote-card__thumbs-container vote-card__percentage-dislike--color">
-            <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-down.svg')"/>
-          </div>
-        </v-img>
+<div height="348" width="348">
+  <v-card height="348" width="348" outlined>
+    <v-img class="vote-card__image" height="348" width="348" :src="require(`../assets/img/${person.picture}.@2x.png`)">
+      <v-row>
+      <v-col cols="1">
+        <div v-if="person.isPositive" class="vote-card__thumbs-container vote-card__percentage-like--color">
+          <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-up.svg')"/>
+        </div>
+        <div v-else class="vote-card__thumbs-container vote-card__percentage-dislike--color">
+          <v-img class="vote-card__result-thumbs" :src="require('../assets/img/thumbs-down.svg')"/>
+        </div>
       </v-col>
-      <v-col cols="9" class="vote-card__text-col">
+      <v-col cols="11" >
         <v-row>
-          <v-col cols="8">
+          <v-col>
             <v-row>
               <p class="vote-card__text-col--title"> {{ person.name }} </p>
             </v-row>
             <v-row>
               <p class="vote-card__text-col--detail"> {{ person.description }} </p>
             </v-row>
-          </v-col>
-          <v-col cols="4">
-            <vote :person="person"/>
+            <v-row>
+              <vote :person="person"/>
+            </v-row>
           </v-col>
         </v-row>
       </v-col>
-    </v-row>
+      </v-row>
+    </v-img>
   </v-card>
   <v-row class="vote-card__percentage">
     <v-col>
@@ -55,7 +55,7 @@
     <div class="vote-card__percentage-like--color" :style="`width:${person.positivePercentag}`"></div>
     <div class="vote-card__percentage-dislike--color" :style="`width:${person.negativePercentag}`"></div>
   </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -63,7 +63,7 @@
 import Vote from '@/components/Vote.vue'
 
 export default {
-  name: 'VoteCard',
+  name: 'VoteCardGrid',
   components: {
     Vote
   },
@@ -78,18 +78,14 @@ export default {
 
 <style scoped>
 .vote-card {
+  width: 348;
+  height: 348;
   padding: 0;
   padding-bottom: 0;
-  z-index: 10;
-  background-color: #8c8a8a;
 }
 
 .vote-card__image-col {
   padding: 0;
-}
-
-.vote-card__text-col {
-  background: linear-gradient(to right, #8c8a8a, #c2bcbc);
 }
 
 .vote-card__text-col--title {
@@ -103,6 +99,9 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 250px;
+  margin-top: -26%;
+  margin-left: -28%;
 }
 
 .vote-card__text-col--detail {
@@ -115,34 +114,34 @@ export default {
   color: white;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  width: 250px;
+  margin-left: -28%;
 }
 
 .vote-card__thumbs-container {
-  width: 45px;
-  height: 45px;
+  width: 30px;
+  height: 30px;
   border: none;
-  padding-top: 10%;
-  margin-left: -100%;
+  padding-top: 8px;
+  margin-top: 130px;
+  margin-left: -120px;
 }
 
 .vote-card__result-thumbs {
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   margin: auto;
 }
 
 .vote-card__image {
-  background: rgba(59, 185, 179, 0.8);
+  width: 348;
+  height: 348;
 }
 
 .vote-card__percentage-like--color {
   background: rgba(59, 185, 179, 0.8);
 }
 
-.test {
-  width: 18% !important;
-}
 
 .vote-card__percentage-dislike--color {
   background: #fbbd4a;
@@ -150,7 +149,9 @@ export default {
 
 .vote-card__percentage {
   height: 54px;
-  margin-top: -32px !important;
+  width: 348px;
+  margin-top: -50px;
+  margin-left: 0;
   padding: 0;
   padding-top: 0;
   position: relative;
@@ -174,7 +175,9 @@ export default {
 
 .vote-card__percentage--color {
   height: 54px;
+  width: 348px;
   margin-top: -54px !important;
+  margin-left: 0;
   z-index: 0;
   padding: 0;
   padding-bottom: 1%;

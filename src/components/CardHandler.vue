@@ -1,7 +1,16 @@
 <template>
-  <v-container fluit>
-    <v-row v-for="(person, index) in people" :key="index">
-      <vote-card :person="person"/>
+  <v-container>
+    <v-row>
+      <v-col cols="9">
+        <p class="card-handler--title">Previous Rulings</p>
+      </v-col>
+      <v-col cols="3" data-app>
+        <v-select :items="items" dense solo v-model="selectValue"/>
+      </v-col>
+    </v-row>
+    <v-row :class="selectValue === 'Grid' ? 'card-handler__card--position' : ''" v-for="(person, index) in people" :key="index">
+      <vote-card v-if="selectValue === 'List'" :person="person"/>
+      <vote-card-grid v-else class="card-handler__card-grid" :person="person"/>
     </v-row>
   </v-container>
 </template>
@@ -10,14 +19,18 @@
 import { mapState } from 'vuex';
 import initialData from '@/assets/data.json'
 import VoteCard from '@/components/VoteCard.vue'
+import VoteCardGrid from '@/components/VoteCardGrid.vue'
 export default {
   name: 'cardHandler',
   components: {
-    VoteCard
+    VoteCard,
+    VoteCardGrid
   },
   data() {
     return {
       peopleLocalStorage: null,
+      selectValue: 'Grid',
+      items: ['List', 'Grid']
     }
   },
   beforeMount() {
@@ -65,5 +78,20 @@ export default {
 </script>
 
 <style scoped>
+.card-handler__card--position {
+  display: inline-block;
+}
 
+.card-handler__card-grid {
+  margin: 0px 16px 50px 16px;
+}
+
+.card-handler--title {
+  font-family: Lato;
+  font-size: 45px;
+  font-weight: 300;
+  line-height: 54px;
+  letter-spacing: 0px;
+  text-align: left;
+}
 </style>
