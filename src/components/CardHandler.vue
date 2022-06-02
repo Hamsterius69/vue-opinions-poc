@@ -4,14 +4,21 @@
       <v-col cols="9">
         <p class="card-handler--title">Previous Rulings</p>
       </v-col>
-      <v-col cols="3" data-app>
+      <v-col cols="3" data-app v-if="$vuetify.breakpoint.width > 821">
         <v-select :items="items" dense solo v-model="selectValue"/>
       </v-col>
     </v-row>
-    <v-row :class="selectValue === 'Grid' ? 'card-handler__card--position' : ''" v-for="(person, index) in people" :key="index">
-      <vote-card v-if="selectValue === 'List'" :person="person"/>
-      <vote-card-grid v-else class="card-handler__card-grid" :person="person"/>
-    </v-row>
+    <div v-if="$vuetify.breakpoint.width > 821">
+      <v-row :class="selectValue === 'Grid' ? 'card-handler__card--position' : ''" v-for="(person, index) in people" :key="index">
+        <vote-card v-if="selectValue === 'List'" :person="person"/>
+        <vote-card-grid v-else class="card-handler__card-grid" :person="person"/>
+      </v-row>
+    </div>
+    <horizontal-scroll v-else>
+      <v-row class="card-handler__card--position" v-for="(person, index) in people" :key="index">
+        <vote-card-grid class="card-handler__card-grid" :person="person"/>
+      </v-row>
+    </horizontal-scroll>
   </v-container>
 </template>
 
@@ -20,16 +27,19 @@ import { mapState } from 'vuex';
 import initialData from '@/assets/data.json'
 import VoteCard from '@/components/VoteCard.vue'
 import VoteCardGrid from '@/components/VoteCardGrid.vue'
+import HorizontalScroll from 'vue-horizontal-scroll'
+import 'vue-horizontal-scroll/dist/vue-horizontal-scroll.css'
 export default {
   name: 'cardHandler',
   components: {
     VoteCard,
-    VoteCardGrid
+    VoteCardGrid,
+    HorizontalScroll
   },
   data() {
     return {
       peopleLocalStorage: null,
-      selectValue: 'Grid',
+      selectValue: 'List',
       items: ['List', 'Grid']
     }
   },
